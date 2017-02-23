@@ -56,7 +56,7 @@ describe('searchYouTube', function() {
   });
 
   it('should accept `key`, `query`, and `max` options and send them in GET request', function() {
-    searchYouTube({ key: 'API_KEY', query: 'cats', max: 10 }, () => {});
+    searchYouTube({ key: 'API_KEY', query: 'cats', max: 10, part: 'snippet', type: 'video' }, () => {});
 
     var params = getURLSearchParams(requests[0].url);
     expect(params.key).to.equal('API_KEY');
@@ -70,7 +70,9 @@ describe('searchYouTube', function() {
     var options = {
       key: window.YOUTUBE_API_KEY,
       query: 'react',
-      max: 5
+      max: 5,
+      part: 'snippet',
+      type: 'video'
     };
 
     // We want this test to make a real AJAX request
