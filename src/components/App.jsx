@@ -16,14 +16,21 @@ class App extends React.Component {
 
     this.state = {
       videoList: window.exampleVideoData,
-      currentVideo: window.exampleVideoData[0]
+      currentVideo: window.exampleVideoData[0],
+      query: ''
     };
 
     this.onVideoListEntryClick = this.onVideoListEntryClick.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   onVideoListEntryClick(video) {
     this.setState({currentVideo: video});
+  }
+
+  onSearchChange(event) {
+    this.setState({query: event.target.value}, this.fetchYoutubeVideos(this.state.query));
+    console.log(this.state.query);
   }
 
   fetchYoutubeVideos(query) {
@@ -36,7 +43,7 @@ class App extends React.Component {
       max: 5
     };
 
-    searchYouTube(options, function(videos) {
+    this.props.search(options, function(videos) {
       this.setState({videoList: videos, currentVideo: videos[0]});
     }.bind(this));
   }
@@ -48,7 +55,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <Nav value={this.state.query} handleOnSeachChange={this.onSearchChange}/>
         <div className="col-md-7">
           <VideoPlayer currentVideo={this.state.currentVideo}/>
         </div>
@@ -60,8 +67,6 @@ class App extends React.Component {
   }
 
 }
-
-// ReactDOM.render(<App />, document.getElementById('app'));
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
