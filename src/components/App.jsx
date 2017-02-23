@@ -19,10 +19,6 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0]
     };
 
-    // searchYouTube({ key: window.YOUTUBE_API_KEY, q: 'cats', part: 'snippet', type: 'video', videoEmbeddable: true, max: 5 }, function(videos) { 
-    //   this.setState({videoList: videos, currentVideo: videos[0]});
-    // }.bind(this));
-
     this.onVideoListEntryClick = this.onVideoListEntryClick.bind(this);
   }
 
@@ -41,8 +37,12 @@ class App extends React.Component {
     };
 
     searchYouTube(options, function(videos) {
-      this.setState({videoList: videos, currentVideo: videos[0]}.bind(this));
+      this.setState({videoList: videos, currentVideo: videos[0]});
     }.bind(this));
+  }
+
+  componentDidMount() {
+    this.fetchYoutubeVideos('Hack Reactor');
   }
 
   render() {
