@@ -20,7 +20,7 @@ class App extends React.Component {
     };
 
     searchYouTube({ key: window.YOUTUBE_API_KEY, q: 'cats', part: 'snippet', type: 'video', videoEmbeddable: true, max: 5 }, function(data) { 
-      this.setState({videoList: data.items});
+      this.setState({videoList: data.items, currentVideo: data.items[0]});
     }.bind(this));
 
     this.onVideoListEntryClick = this.onVideoListEntryClick.bind(this);
