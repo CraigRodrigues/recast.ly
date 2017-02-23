@@ -14,10 +14,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.debouncedYouTubeSearch = _.debounce(this.fetchYoutubeVideos, 500); 
+
     this.state = {
       videoList: window.exampleVideoData,
-      currentVideo: window.exampleVideoData[0],
-      query: ''
+      currentVideo: window.exampleVideoData[0]
     };
 
     this.onVideoListEntryClick = this.onVideoListEntryClick.bind(this);
@@ -29,8 +30,8 @@ class App extends React.Component {
   }
 
   onSearchChange(event) {
-    this.setState({query: event.target.value}, this.fetchYoutubeVideos(this.state.query));
-    console.log(this.state.query);
+    console.log(event.target.value);
+    this.debouncedYouTubeSearch(event.target.value);
   }
 
   fetchYoutubeVideos(query) {
