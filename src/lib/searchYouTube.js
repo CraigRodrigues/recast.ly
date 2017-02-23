@@ -4,7 +4,7 @@ var searchYouTube = (options, callback) => {
     type: 'GET',
     data: options,
     success: function(data) {
-      callback(data);
+      callback(data.items);
     },
     error: function(error) {
       console.log(error);

@@ -19,15 +19,30 @@ class App extends React.Component {
       currentVideo: window.exampleVideoData[0]
     };
 
-    searchYouTube({ key: window.YOUTUBE_API_KEY, q: 'cats', part: 'snippet', type: 'video', videoEmbeddable: true, max: 5 }, function(data) { 
-      this.setState({videoList: data.items, currentVideo: data.items[0]});
-    }.bind(this));
+    // searchYouTube({ key: window.YOUTUBE_API_KEY, q: 'cats', part: 'snippet', type: 'video', videoEmbeddable: true, max: 5 }, function(videos) { 
+    //   this.setState({videoList: videos, currentVideo: videos[0]});
+    // }.bind(this));
 
     this.onVideoListEntryClick = this.onVideoListEntryClick.bind(this);
   }
 
   onVideoListEntryClick(video) {
     this.setState({currentVideo: video});
+  }
+
+  fetchYoutubeVideos(query) {
+    let options = {
+      key: window.YOUTUBE_API_KEY,
+      q: query,
+      part: 'snippet',
+      type: 'video', 
+      videoEmbeddable: true,
+      max: 5
+    };
+
+    searchYouTube(options, function(videos) {
+      this.setState({videoList: videos, currentVideo: videos[0]}.bind(this));
+    }.bind(this));
   }
 
   render() {
@@ -46,7 +61,7 @@ class App extends React.Component {
 
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+// ReactDOM.render(<App />, document.getElementById('app'));
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
